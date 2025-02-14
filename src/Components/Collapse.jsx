@@ -1,40 +1,40 @@
-import React, { useState } from 'react'
-import chevronUp from "../Assets/ChevronUp.png"
-import chevronDown from "../Assets/ChevronDown.png"
+import React, { useState } from "react";
+import chevronUp from "../Assets/ChevronUp.png";
+import chevronDown from "../Assets/ChevronDown.png";
+import "../Components/Collapse.css"; // Assure-toi que le chemin est bon
 
+function Collapse({ title, content }) {
+    const [contentVisible, setContentVisible] = useState(false);
 
-
-
-function Collapse({title, content}) {
-    // défini le collapse par défaut comme fermé
-    const [contentVisible, setContentVisible] = useState(false)
-
-    // à chaque clic sur le collapse, ca inverse la valeur pour le ouvert/fermé
-    const affContent = () => { 
-        setContentVisible(!contentVisible) // inverse la valeur actuelle
-    }
-
-    // défini les classes selon si c'est visible ou caché, idem pour le chevron
-    const collapseContent = (contentVisible ? "visible" : "hidden") + " collapse"
-    const collapseChevron = (contentVisible ? chevronUp : chevronDown)
+    const toggleContent = () => {
+        setContentVisible(!contentVisible);
+    };
 
     return (
-        <div className='collapse'>
-
-            {/* affiche le titre et le chevron */}
-            <div className='collapse__header' onClick={affContent}>
+        <div className="collapse">
+            <div className="collapse__header" onClick={toggleContent}>
                 <span>{title}</span>
                 <div className="chevronValue">
-                    <img src={collapseChevron} alt=""/>
+                    <img
+                        src={contentVisible ? chevronUp : chevronDown}
+                        alt={contentVisible ? "Réduire le contenu" : "Afficher le contenu"}
+                    />
                 </div>
             </div>
 
-            {/* affiche le contenu */}
-            <div className={collapseContent}>
-                <ul>{content}</ul>
+            <div className={`collapse__content ${contentVisible ? "visible" : ""}`}>
+                {Array.isArray(content) ? (
+                    <ul>
+                        {content.map((item, index) => (
+                            <li key={index}>{item}</li>
+                        ))}
+                    </ul>
+                ) : (
+                    <p>{content}</p>
+                )}
             </div>
         </div>
-    )
+    );
 }
 
-export default Collapse
+export default Collapse;

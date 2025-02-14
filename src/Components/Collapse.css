@@ -1,0 +1,13 @@
+.collapse__content {
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-10px);
+    overflow: hidden;
+    transition: max-height 0.6s ease-out, opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.collapse__content.visible {
+    max-height: 500px; /* Ajuste selon la hauteur du contenu */
+    opacity: 1;
+    transform: translateY(0);
+}
